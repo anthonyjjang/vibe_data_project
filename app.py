@@ -12,54 +12,55 @@ load_dotenv()
 
 #######################  llm 호출 함수 ########################
 
-# def llm_call(prompt: str) -> str:
-#     """
-#     주어진 프롬프트로 LLM을 동기적으로 호출합니다.
-#     이는 메시지를 하나의 프롬프트로 연결하는 일반적인 헬퍼 함수입니다.
-#     """
-#     model = "gpt-4.1" # o4-mini가 가능하면 제일 좋음
-#     openai_api_key = os.getenv("OPENAI_API_KEY")
-#     client = OpenAI(api_key=openai_api_key)
-#     messages = [{"role": "user", "content": prompt}]
-#     chat_completion = client.chat.completions.create(
-#         model=model,
-#         messages=messages,
-#     )
-#     print(model, "완료")
-#     return chat_completion.choices[0].message.content
+def llm_call(prompt: str) -> str:
+    """
+    주어진 프롬프트로 LLM을 동기적으로 호출합니다.
+    이는 메시지를 하나의 프롬프트로 연결하는 일반적인 헬퍼 함수입니다.
+    """
+    model = "gpt-4.1" # o4-mini가 가능하면 제일 좋음
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    client = OpenAI(api_key=openai_api_key)
+    messages = [{"role": "user", "content": prompt}]
+    chat_completion = client.chat.completions.create(
+        model=model,
+        messages=messages,
+    )
+    print(model, "완료")
+    return chat_completion.choices[0].message.content
+
 
 
 # 만약 ollama를 이용할 경우 활용
 
 
-def llm_call(prompt: str) -> str:
-    """
-    Ollama의 REST API를 사용하여 Qwen 모델을 호출합니다.
-    """
+# def llm_call(prompt: str) -> str:
+#     """
+#     Ollama의 REST API를 사용하여 Qwen 모델을 호출합니다.
+#     """
 
-    def remove_think_tags(text: str) -> str:
-        """
-        Removes all content enclosed in <think>...</think> tags from the input text.
-        """
-        return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+#     def remove_think_tags(text: str) -> str:
+#         """
+#         Removes all content enclosed in <think>...</think> tags from the input text.
+#         """
+#         return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 
-    model = "qwen3:1.7b"
-    url = "http://localhost:11434/api/generate"
-    headers = {"Content-Type": "application/json"}
-    payload = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False  
-    }
+#     model = "qwen3:1.7b"
+#     url = "http://localhost:11434/api/generate"
+#     headers = {"Content-Type": "application/json"}
+#     payload = {
+#         "model": model,
+#         "prompt": prompt,
+#         "stream": False  
+#     }
 
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
-    if response.status_code != 200:
-        raise Exception(f"LLM 호출 실패: {response.status_code}, {response.text}")
+#     response = requests.post(url, headers=headers, data=json.dumps(payload))
+#     if response.status_code != 200:
+#         raise Exception(f"LLM 호출 실패: {response.status_code}, {response.text}")
 
-    result = response.json()
+#     result = response.json()
     
-    print(model, "완료")
-    return remove_think_tags(result["response"])
+#     print(model, "완료")
+#     return remove_think_tags(result["response"])
 
 #######################  1단계 : code 생성 ########################
 def generate_code_prompt(user_query: str, df_preview: dict, df_types: dict) -> str:
