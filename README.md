@@ -1,6 +1,10 @@
 
 # 내 엑셀데이터와 대화하는 AI Agent
 
+## 작동방식
+![image](https://github.com/user-attachments/assets/e2f69ff8-ba16-498e-b6a8-48656369b838)
+
+
 ## 설치 방법
 
 1. 필수 패키지 설치  
