@@ -17,7 +17,7 @@ def llm_call(prompt: str) -> str:
     주어진 프롬프트로 LLM을 동기적으로 호출합니다.
     이는 메시지를 하나의 프롬프트로 연결하는 일반적인 헬퍼 함수입니다.
     """
-    model = "gpt-4.1" # o4-mini가 가능하면 제일 좋음
+    model = "gpt-4.1-mini" # o4-mini가 가능하면 제일 좋음
     openai_api_key = os.getenv("OPENAI_API_KEY")
     client = OpenAI(api_key=openai_api_key)
     messages = [{"role": "user", "content": prompt}]
@@ -125,7 +125,7 @@ def execute_generated_code(code: str, df: pd.DataFrame, max_retries: int = 3):
     
     for attempt in range(max_retries):
         try:
-            local_vars = {"df": df}
+            local_vars = {"df": df, "final_df": None}
             exec(current_code, {}, local_vars)
             return local_vars.get("final_df", None)
         except Exception as e:
@@ -213,7 +213,6 @@ def main():
             "서울에서 카페가 위치한 평균 층수가 가장 높은 구는 어디인가요?", 
             "서울에서 부동산 중개업이 전체 상가에서 차지하는 비중이 가장 높은 지역은 어디인가요?",
             "성동구에서 업종별(중분류) 상점 비중은 어떻게 되나요?",
-            "서울에서 음식점 업종이 각 행정구별로 층별 분포가 어떻게 되어 있는지 알고 싶어요. 모든 행정구에 대해서 궁금해요. 예를 들어, 성동구는 1층이 몇프로 2층이 몇프로, 강남구는 3층이 몇프로 등."
         ]
 
         if "user_query" not in st.session_state:
