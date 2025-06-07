@@ -9,7 +9,7 @@
 
 1. 필수 패키지 설치  
    ```bash
-   uv add openai pandas streamlit python-dotenv
+   uv add openai pandas streamlit python-dotenv openpyxl
    ```
 
 2. 환경 변수 파일(.env)을 생성한 후, OpenAI API 키를 입력.
