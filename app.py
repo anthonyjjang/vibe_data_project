@@ -17,7 +17,7 @@ def llm_call(prompt: str) -> str:
     주어진 프롬프트로 LLM을 동기적으로 호출합니다.
     이는 메시지를 하나의 프롬프트로 연결하는 일반적인 헬퍼 함수입니다.
     """
-    model = "gpt-4.1-mini" # o4-mini가 가능하면 제일 좋음
+    model = "gpt-4o-mini" # o4-mini가 가능하면 제일 좋음
     openai_api_key = os.getenv("OPENAI_API_KEY")
     client = OpenAI(api_key=openai_api_key)
     messages = [{"role": "user", "content": prompt}]
